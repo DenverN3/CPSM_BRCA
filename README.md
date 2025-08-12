@@ -1,7 +1,8 @@
 # CPSM_BRCA
 Overview
 
-This repository contains a comprehensive survival analysis of The Cancer Genome Atlas (TCGA) breast cancer cohort using the Cancer Patient Survival Model (CPSM) R package. We analyzed 1,081 breast cancer patients to identify key genetic biomarkers associated with survival outcomes and developed predictive models achieving excellent performance (C-index: 0.78).
+This repository contains a comprehensive survival analysis of The Cancer Genome Atlas (TCGA) breast cancer cohort using the Cancer Patient Survival Model (CPSM) R package. I analyzed 1,081 breast cancer patients to identify key genetic biomarkers associated with survival outcomes and developed predictive models achieving excellent performance (C-index: 0.78).
+
 Key Findings
 
 Identified 1,440 genes significantly associated with survival (p < 0.05)
