@@ -1,0 +1,1283 @@
+---
+title: "CPSM_BRCA"
+author: "Denver Ncube"
+date: "2025-07-14"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+# ========================================================================
+# CPSM PIPELINE FOR BREAST CANCER (TCGA-BRCA) DATA
+# Adapted from COAD pipeline with breast cancer-specific modifications
+# ========================================================================
+
+suppressPackageStartupMessages({
+  library(CPSM)
+  library(TCGAbiolinks)
+  library(SummarizedExperiment)
+  library(dplyr)
+  library(survival)
+  library(glmnet)
+  library(ggplot2)
+  library(org.Hs.eg.db)
+  library(AnnotationDbi)
+})
+
+# ========================================================================
+# STEP 1: BREAST CANCER DATA DOWNLOAD AND PREPARATION
+# ========================================================================
+download_and_prepare_tcga_brca <- function() {
+  cat("🎗️ DOWNLOADING TCGA-BRCA (BREAST CANCER) DATA\n")
+  cat("==============================================\n")
+  
+  # Download TCGA-BRCA data
+  query <- GDCquery(
+    project = "TCGA-BRCA",  # Changed from COAD to BRCA
+    data.category = "Transcriptome Profiling",
+    data.type = "Gene Expression Quantification",
+    workflow.type = "STAR - Counts"
+  )
+  
+  cat("Downloading breast cancer data...\n")
+  GDCdownload(query)
+  
+  cat("Preparing data...\n")
+  tcga_data <- GDCprepare(query)
+  
+  # Convert to CPSM format with breast cancer-specific processing
+  cat("\n🔄 CONVERTING TO CPSM FORMAT - BREAST CANCER SPECIFICS\n")
+  cat("======================================================\n")
+  
+  # Extract clinical and expression data
+  clinical_df <- as.data.frame(colData(tcga_data))
+  expression_mat <- assay(tcga_data, "fpkm_unstrand")
+  
+  # Breast cancer-specific clinical data processing
+  clinical_cpsm <- data.frame(
+    Age = as.numeric(clinical_df$age_at_index),
+    subtype = rep("BRCA", nrow(clinical_df)),
+    gender = tolower(as.character(clinical_df$gender)),
+    race = ifelse(is.na(clinical_df$race), "NOT REPORTED", as.character(clinical_df$race)),
+    
+    # Breast cancer-specific staging
+    ajcc_pathologic_tumor_stage = ifelse(is.na(clinical_df$ajcc_pathologic_stage),
+                                       "Unknown", as.character(clinical_df$ajcc_pathologic_stage)),
+    
+    # Breast cancer-specific features
+    histological_type = ifelse(is.na(clinical_df$primary_diagnosis),
+                              "Unknown", as.character(clinical_df$primary_diagnosis)),
+    
+    # ER/PR/HER2 status (key breast cancer biomarkers)
+    er_status = ifelse(is.na(clinical_df$paper_BRCA_Subtype_PAM50), 
+                      "Unknown", as.character(clinical_df$paper_BRCA_Subtype_PAM50)),
+    
+    histological_grade = ifelse(is.na(clinical_df$paper_BRCA_Pathology),
+                               "Unknown", as.character(clinical_df$paper_BRCA_Pathology)),
+    
+    treatment_outcome_first_course = ifelse(clinical_df$vital_status == "Alive",
+                                          "Complete Remission/Response", "Progressive Disease"),
+    radiation_treatment_adjuvant = rep("Unknown", nrow(clinical_df)),
+    sample_type = as.character(clinical_df$sample_type),
+    type = rep("BRCA", nrow(clinical_df))
+  )
+  
+  # Survival data processing (same as COAD)
+  survival_time_days <- ifelse(
+    !is.na(clinical_df$days_to_death) & clinical_df$days_to_death > 0,
+    clinical_df$days_to_death,
+    ifelse(!is.na(clinical_df$days_to_last_follow_up) & clinical_df$days_to_last_follow_up > 0,
+           clinical_df$days_to_last_follow_up, NA)
+  )
+  
+  survival_status <- ifelse(clinical_df$vital_status == "Dead", 1, 0)
+  
+  # Add survival columns
+  clinical_cpsm$OS <- survival_status
+  clinical_cpsm$OS.time <- survival_time_days
+  clinical_cpsm$DSS <- survival_status
+  clinical_cpsm$DSS.time <- survival_time_days
+  clinical_cpsm$DFI <- rep(NA, nrow(clinical_df))
+  clinical_cpsm$DFI.time <- rep(NA, nrow(clinical_df))
+  clinical_cpsm$PFI <- rep(NA, nrow(clinical_df))
+  clinical_cpsm$PFI.time <- rep(NA, nrow(clinical_df))
+  
+  rownames(clinical_cpsm) <- rownames(clinical_df)
+  
+  # Filter for complete survival data
+  cat("Filtering for complete survival data...\n")
+  complete_cases <- !is.na(clinical_cpsm$OS) &
+    !is.na(clinical_cpsm$OS.time) &
+    !is.na(clinical_cpsm$Age) &
+    clinical_cpsm$OS.time > 0 &
+    clinical_cpsm$Age > 0
+  
+  cat(sprintf("Cases with complete survival data: %d/%d (%.1f%%)\n",
+              sum(complete_cases), length(complete_cases),
+              100*sum(complete_cases)/length(complete_cases)))
+  
+  clinical_clean <- clinical_cpsm[complete_cases, ]
+  
+  # Match expression data
+  common_samples <- intersect(rownames(clinical_clean), colnames(expression_mat))
+  clinical_final <- clinical_clean[common_samples, ]
+  expression_final <- expression_mat[, common_samples]
+  
+  # Gene filtering and selection
+  cat("Performing gene quality filtering...\n")
+  gene_na_prop <- rowMeans(is.na(expression_final) | expression_final == 0)
+  good_genes <- gene_na_prop < 0.8
+  expression_filtered <- expression_final[good_genes, ]
+  
+  cat(sprintf("Genes after quality filtering: %d/%d (%.1f%% retained)\n",
+              nrow(expression_filtered), nrow(expression_final),
+              100*nrow(expression_filtered)/nrow(expression_final)))
+  
+  # Select top variable genes
+  cat("Selecting top 5000 most variable genes for analysis...\n")
+  if (nrow(expression_filtered) > 5000) {
+    gene_vars <- apply(expression_filtered, 1, var, na.rm = TRUE)
+    top_var_genes <- order(gene_vars, decreasing = TRUE)[1:5000]
+    expression_filtered <- expression_filtered[top_var_genes, ]
+  }
+  
+  # Clean and transform expression data
+  expression_filtered[is.na(expression_filtered)] <- 1e-6
+  expression_filtered[expression_filtered == 0] <- 1e-6
+  expression_log <- log2(expression_filtered + 1)
+  expression_t <- t(as.data.frame(expression_log))
+  
+  # Combine clinical and expression data
+  clinical_final <- clinical_final[rownames(expression_t), ]
+  combined_df <- cbind(clinical_final, expression_t)
+  
+  # Print breast cancer-specific summary
+  cat("\n📊 BREAST CANCER DATA SUMMARY:\n")
+  cat("===============================\n")
+  cat(sprintf("Final dataset: %d samples × %d features\n",
+              nrow(combined_df), ncol(combined_df)))
+  cat(sprintf("Events (deaths): %d (%.1f%%)\n",
+              sum(combined_df$OS), 100*mean(combined_df$OS)))
+  
+  # Breast cancer subtype distribution
+  if ("er_status" %in% colnames(clinical_final)) {
+    cat("\nBreast cancer subtype distribution:\n")
+    subtype_table <- table(clinical_final$er_status)
+    print(subtype_table)
+  }
+  
+  # Staging distribution
+  cat("\nTumor staging distribution:\n")
+  stage_table <- table(clinical_final$ajcc_pathologic_tumor_stage)
+  print(stage_table)
+  
+  return(combined_df)
+}
+
+# ========================================================================
+# BREAST CANCER-SPECIFIC ROBUST CPSM PIPELINE
+# ========================================================================
+run_brca_cpsm_pipeline <- function(combined_df, split_ratio = 0.8) {
+  cat("\n🔬 RUNNING BREAST CANCER CPSM PIPELINE\n")
+  cat("======================================\n")
+  
+  results <- list()
+  
+  # Step 1: Data Processing
+  cat("\n📋 Step 1: Data Processing\n")
+  cat("-------------------------\n")
+  tryCatch({
+    New_data <- data_process_f(combined_df, col_num = 19, surv_time = "OS.time")
+    cat(sprintf("Processed data: %d samples × %d features\n",
+                nrow(New_data), ncol(New_data)))
+    results$processed_data <- New_data
+  }, error = function(e) {
+    cat("❌ Data processing error:", e$message, "\n")
+    return(NULL)
+  })
+  
+  if (is.null(results$processed_data)) {
+    cat("❌ Data processing failed. Cannot continue.\n")
+    return(results)
+  }
+  
+  # Step 2: Train-Test Split
+  cat(sprintf("\n📊 Step 2: Train-Test Split (%.0f/%.0f)\n", 
+              split_ratio*100, (1-split_ratio)*100))
+  cat("------------------------------------------\n")
+  tryCatch({
+    result_split <- tr_test_f(data = results$processed_data, fraction = split_ratio)
+    train_data <- result_split$train_data
+    test_data <- result_split$test_data
+    
+    cat(sprintf("Training set: %d samples (%d events, %.1f%%)\n",
+                nrow(train_data), sum(train_data$OS), 100*mean(train_data$OS)))
+    cat(sprintf("Test set: %d samples (%d events, %.1f%%)\n",
+                nrow(test_data), sum(test_data$OS), 100*mean(test_data$OS)))
+    
+    results$train_data <- train_data
+    results$test_data <- test_data
+    
+    # Check if we have enough events for reliable C-index
+    test_events <- sum(test_data$OS)
+    if (test_events >= 20) {
+      cat("✅ Excellent: Sufficient events for reliable C-index calculation\n")
+    } else {
+      cat("⚠️ Warning: Limited events may affect C-index reliability\n")
+    }
+    
+  }, error = function(e) {
+    cat("❌ Train-test split error:", e$message, "\n")
+    return(results)
+  })
+  
+  # Step 3: Normalization
+  cat("\n🔄 Step 3: Data Normalization\n")
+  cat("-----------------------------\n")
+  tryCatch({
+    Result_N_data <- train_test_normalization_f(
+      train_data = results$train_data,
+      test_data = results$test_data,
+      col_num = 20
+    )
+    results$Train_Clin <- Result_N_data$Train_Clin
+    results$Test_Clin <- Result_N_data$Test_Clin
+    results$Train_Norm_data <- Result_N_data$Train_Norm_data
+    results$Test_Norm_data <- Result_N_data$Test_Norm_data
+    cat("✅ Normalization completed\n")
+  }, error = function(e) {
+    cat("❌ Normalization error:", e$message, "\n")
+    return(results)
+  })
+  
+  # Step 4: Breast Cancer-Specific Univariate Analysis
+  cat("\n🧬 Step 4: Breast Cancer Gene Analysis\n")
+  cat("--------------------------------------\n")
+  tryCatch({
+    results <- perform_brca_univariate_selection(results)
+  }, error = function(e) {
+    cat("❌ Univariate selection error:", e$message, "\n")
+    results$Train_Uni_sig_data <- results$Train_Norm_data
+    results$Test_Uni_sig_data <- results$Test_Norm_data
+    results$significant_genes <- c()
+  })
+  
+  # Step 5: Model Development with Breast Cancer Features
+  cat("\n🏗️ Step 5: Breast Cancer Model Development\n")
+  cat("------------------------------------------\n")
+  results <- develop_brca_models(results)
+  
+  return(results)
+}
+
+# ========================================================================
+# BREAST CANCER-SPECIFIC UNIVARIATE ANALYSIS
+# ========================================================================
+perform_brca_univariate_selection <- function(results) {
+  cat("Analyzing breast cancer gene signatures...\n")
+  
+  train_data <- results$Train_Norm_data
+  test_data <- results$Test_Norm_data
+  
+  # Get gene columns
+  gene_cols <- 21:ncol(train_data)
+  
+  if (length(gene_cols) == 0) {
+    cat("No gene features found\n")
+    results$Train_Uni_sig_data <- train_data
+    results$Test_Uni_sig_data <- test_data
+    results$significant_genes <- c()
+    return(results)
+  }
+  
+  # Perform univariate Cox regression
+  significant_genes <- c()
+  p_values <- c()
+  hazard_ratios <- c()
+  
+  cat(sprintf("Testing %d genes for breast cancer survival associations...\n", 
+              length(gene_cols)))
+  
+  # Create survival object
+  surv_obj <- Surv(train_data$OS_month, train_data$OS)
+  
+  # Progress bar
+  pb <- txtProgressBar(min = 1, max = length(gene_cols), style = 3)
+  
+  for (i in 1:length(gene_cols)) {
+    col_idx <- gene_cols[i]
+    gene_name <- colnames(train_data)[col_idx]
+    
+    setTxtProgressBar(pb, i)
+    
+    tryCatch({
+      gene_values <- train_data[, col_idx]
+      
+      # Skip if no variation
+      if (length(unique(gene_values[!is.na(gene_values)])) < 2) {
+        next
+      }
+      
+      # Fit Cox model
+      cox_model <- coxph(surv_obj ~ gene_values)
+      cox_summary <- summary(cox_model)
+      
+      # Extract results
+      p_val <- cox_summary$coefficients[, "Pr(>|z|)"][1]
+      hr <- exp(coef(cox_model))
+      
+      if (!is.na(p_val) && p_val < 0.05) {
+        significant_genes <- c(significant_genes, gene_name)
+        p_values <- c(p_values, p_val)
+        hazard_ratios <- c(hazard_ratios, hr)
+      }
+    }, error = function(e) {
+      # Skip problematic genes
+    })
+  }
+  
+  close(pb)
+  
+  cat(sprintf("\n🎯 Found %d breast cancer survival-associated genes (p < 0.05)\n", 
+              length(significant_genes)))
+  
+  if (length(significant_genes) > 0) {
+    # Sort by p-value
+    sorted_idx <- order(p_values)
+    significant_genes <- significant_genes[sorted_idx]
+    hazard_ratios <- hazard_ratios[sorted_idx]
+    p_values <- p_values[sorted_idx]
+    
+    # Select top genes
+    max_genes <- min(50, length(significant_genes))
+    top_genes <- significant_genes[1:max_genes]
+    
+    cat(sprintf("Using top %d genes for modeling\n", length(top_genes)))
+    
+    # Show top 10 results
+    cat("\nTop 10 Breast Cancer Survival Genes:\n")
+    for (i in 1:min(10, length(top_genes))) {
+      cat(sprintf("%2d. %s (HR: %.3f, p: %.2e)\n", 
+                  i, substr(top_genes[i], 1, 20), hazard_ratios[i], p_values[i]))
+    }
+    
+    # Create datasets with selected genes
+    selected_cols <- c(1:20, which(colnames(train_data) %in% top_genes))
+    results$Train_Uni_sig_data <- train_data[, selected_cols]
+    results$Test_Uni_sig_data <- test_data[, selected_cols]
+    results$significant_genes <- top_genes
+    results$gene_hrs <- hazard_ratios[1:length(top_genes)]
+    results$gene_pvals <- p_values[1:length(top_genes)]
+  } else {
+    cat("No significant genes found, using all features\n")
+    results$Train_Uni_sig_data <- train_data
+    results$Test_Uni_sig_data <- test_data
+    results$significant_genes <- c()
+  }
+  
+  return(results)
+}
+
+# ========================================================================
+# BREAST CANCER-SPECIFIC MODEL DEVELOPMENT
+# ========================================================================
+develop_brca_models <- function(results) {
+  cat("Developing breast cancer prediction models...\n")
+  
+  # Standardize factor levels
+  cat("Standardizing clinical variables...\n")
+  
+  # Breast cancer-specific clinical variables
+  factor_cols <- c("gender", "ajcc_pathologic_tumor_stage", "race", 
+                   "er_status", "histological_type")
+  
+  for (col_name in factor_cols) {
+    if (col_name %in% colnames(results$Train_Clin)) {
+      train_levels <- unique(as.character(results$Train_Clin[[col_name]]))
+      test_levels <- unique(as.character(results$Test_Clin[[col_name]]))
+      all_levels <- unique(c(train_levels, test_levels))
+      
+      # Update all datasets
+      for (dataset_name in c("Train_Clin", "Test_Clin", "Train_Norm_data", 
+                            "Test_Norm_data", "Train_Uni_sig_data", "Test_Uni_sig_data")) {
+        if (!is.null(results[[dataset_name]]) && col_name %in% colnames(results[[dataset_name]])) {
+          results[[dataset_name]][[col_name]] <- factor(results[[dataset_name]][[col_name]], 
+                                                        levels = all_levels)
+        }
+      }
+    }
+  }
+  
+  # Model 1: Breast Cancer Clinical Features Only
+  cat("\n🏥 Model 1: Breast Cancer Clinical Features\n")
+  
+  # Breast cancer-specific clinical features
+  brca_clinical_features <- c("Age", "gender", "ajcc_pathologic_tumor_stage")
+  
+  # Add ER status if available
+  if ("er_status" %in% colnames(results$Train_Clin)) {
+    brca_clinical_features <- c(brca_clinical_features, "er_status")
+  }
+  
+  Key_Clin_feature_list <- data.frame(
+    ID = brca_clinical_features,
+    stringsAsFactors = FALSE
+  )
+  
+  tryCatch({
+    Result_Model_Type1 <- MTLR_pred_model_f(
+      train_clin_data = results$Train_Clin,
+      test_clin_data = results$Test_Clin,
+      Model_type = 1,
+      train_features_data = results$Train_Clin,
+      test_features_data = results$Test_Clin,
+      Clin_Feature_List = Key_Clin_feature_list,
+      surv_time = "OS_month",
+      surv_event = "OS"
+    )
+    
+    cat("✅ Breast Cancer Clinical Model Performance:\n")
+    if (!is.null(Result_Model_Type1$Error_mat_for_Model)) {
+      print(Result_Model_Type1$Error_mat_for_Model)
+    }
+    results$Model1 <- Result_Model_Type1
+  }, error = function(e) {
+    cat("❌ Clinical model error:", e$message, "\n")
+    results$Model1 <- NULL
+  })
+  
+  # Model 2: Gene Signature Model
+  if (length(results$significant_genes) > 0) {
+    cat("\n🧬 Model 2: Breast Cancer Gene Signature\n")
+    
+    # Use top 5 breast cancer genes
+    top_brca_genes <- head(results$significant_genes, 5)
+    
+    Gene_feature_list <- data.frame(
+      ID = top_brca_genes,
+      stringsAsFactors = FALSE
+    )
+    
+    tryCatch({
+      Result_Model_Type2 <- MTLR_pred_model_f(
+        train_clin_data = results$Train_Clin,
+        test_clin_data = results$Test_Clin,
+        Model_type = 2,
+        train_features_data = results$Train_Uni_sig_data,
+        test_features_data = results$Test_Uni_sig_data,
+        Clin_Feature_List = Gene_feature_list,
+        surv_time = "OS_month",
+        surv_event = "OS"
+      )
+      
+      cat("✅ Gene Signature Model Performance:\n")
+      if (!is.null(Result_Model_Type2$Error_mat_for_Model)) {
+        print(Result_Model_Type2$Error_mat_for_Model)
+      }
+      results$Model2 <- Result_Model_Type2
+    }, error = function(e) {
+      cat("❌ Gene model error:", e$message, "\n")
+      results$Model2 <- NULL
+    })
+  }
+  
+  # Model 3: Combined Breast Cancer Model
+  if (length(results$significant_genes) > 0) {
+    cat("\n🎯 Model 3: Combined Breast Cancer Model\n")
+    
+    # Combine clinical and genetic features
+    top_genes <- head(results$significant_genes, 3)
+    combined_features <- c(brca_clinical_features, top_genes)
+    
+    Combined_feature_list <- data.frame(
+      ID = combined_features,
+      stringsAsFactors = FALSE
+    )
+    
+    tryCatch({
+      Result_Model_Type3 <- MTLR_pred_model_f(
+        train_clin_data = results$Train_Clin,
+        test_clin_data = results$Test_Clin,
+        Model_type = 4,
+        train_features_data = results$Train_Uni_sig_data,
+        test_features_data = results$Test_Uni_sig_data,
+        Clin_Feature_List = Combined_feature_list,
+        surv_time = "OS_month",
+        surv_event = "OS"
+      )
+      
+      cat("✅ Combined Model Performance:\n")
+      if (!is.null(Result_Model_Type3$Error_mat_for_Model)) {
+        print(Result_Model_Type3$Error_mat_for_Model)
+      }
+      results$Model3 <- Result_Model_Type3
+    }, error = function(e) {
+      cat("❌ Combined model error:", e$message, "\n")
+      results$Model3 <- NULL
+    })
+  }
+  
+  # Identify best model
+  cat("\n🏆 MODEL COMPARISON\n")
+  cat("==================\n")
+  
+  best_model <- NULL
+  best_c_index <- 0
+  model_names <- c("Model1", "Model2", "Model3")
+  
+  for (model_name in model_names) {
+    if (!is.null(results[[model_name]]) && 
+        !is.null(results[[model_name]]$Error_mat_for_Model)) {
+      tryCatch({
+        c_index <- results[[model_name]]$Error_mat_for_Model$C_index[2]
+        cat(sprintf("%s Test C-index: %.3f\n", model_name, c_index))
+        
+        if (c_index > best_c_index) {
+          best_c_index <- c_index
+          best_model <- model_name
+        }
+      }, error = function(e) {
+        cat(sprintf("%s: Error accessing C-index\n", model_name))
+      })
+    }
+  }
+  
+  if (!is.null(best_model)) {
+    cat(sprintf("\n🎉 Best breast cancer model: %s (C-index = %.3f)\n", 
+                best_model, best_c_index))
+    results$best_model <- best_model
+    results$best_model_object <- results[[best_model]]
+    results$best_c_index <- best_c_index
+  }
+  
+  return(results)
+}
+
+# ========================================================================
+# BREAST CANCER GENE ANNOTATION
+# ========================================================================
+annotate_brca_genes <- function(results) {
+  if (is.null(results$significant_genes) || length(results$significant_genes) == 0) {
+    cat("No significant genes to annotate\n")
+    return(NULL)
+  }
+  
+  cat("\n🧬 BREAST CANCER GENE ANNOTATION\n")
+  cat("================================\n")
+  
+  # Convert ENSEMBL IDs to gene symbols
+  ensembl_clean <- gsub("\\.\\d+$", "", results$significant_genes)
+  
+  tryCatch({
+    gene_symbols <- mapIds(org.Hs.eg.db,
+                          keys = ensembl_clean,
+                          column = "SYMBOL",
+                          keytype = "ENSEMBL",
+                          multiVals = "first")
+    
+    gene_names <- mapIds(org.Hs.eg.db,
+                        keys = ensembl_clean,
+                        column = "GENENAME",
+                        keytype = "ENSEMBL",
+                        multiVals = "first")
+    
+    # Create annotation table
+    gene_annotation <- data.frame(
+      Rank = 1:length(results$significant_genes),
+      ENSEMBL = results$significant_genes,
+      Symbol = ifelse(is.na(gene_symbols), ensembl_clean, gene_symbols),
+      Gene_Name = ifelse(is.na(gene_names), "Unknown", gene_names),
+      HR = if(!is.null(results$gene_hrs)) results$gene_hrs else rep(NA, length(results$significant_genes)),
+      P_value = if(!is.null(results$gene_pvals)) results$gene_pvals else rep(NA, length(results$significant_genes)),
+      stringsAsFactors = FALSE
+    )
+    
+    # Display top 10
+    cat("Top 10 Breast Cancer Survival Genes:\n")
+    cat("=====================================\n")
+    for (i in 1:min(10, nrow(gene_annotation))) {
+      g <- gene_annotation[i, ]
+      effect <- if(!is.na(g$HR)) {
+        if(g$HR > 1) "Risk" else "Protective"
+      } else "Unknown"
+      
+      cat(sprintf("%2d. %s (%s)\n", i, g$Symbol, g$ENSEMBL))
+      if (!is.na(g$Gene_Name) && g$Gene_Name != "Unknown") {
+        cat(sprintf("    %s\n", substr(g$Gene_Name, 1, 60)))
+      }
+      if (!is.na(g$HR)) {
+        cat(sprintf("    HR: %.3f, P: %.2e, Effect: %s\n", g$HR, g$P_value, effect))
+      }
+      cat("\n")
+    }
+    
+    # Save annotation
+    write.csv(gene_annotation, "brca_gene_annotation.csv", row.names = FALSE)
+    cat("📁 Gene annotation saved to 'brca_gene_annotation.csv'\n")
+    
+    return(gene_annotation)
+    
+  }, error = function(e) {
+    cat("❌ Gene annotation error:", e$message, "\n")
+    return(NULL)
+  })
+}
+
+# ========================================================================
+# MAIN EXECUTION FUNCTION FOR BREAST CANCER
+# ========================================================================
+run_tcga_brca_cpsm_analysis <- function(split_ratio = 0.8) {
+  cat("🎗️ TCGA BREAST CANCER CPSM ANALYSIS\n")
+  cat("===================================\n\n")
+  
+  # Step 1: Download and prepare breast cancer data
+  cat("📥 Step 1: Data Preparation\n")
+  tryCatch({
+    combined_df <- download_and_prepare_tcga_brca()
+  }, error = function(e) {
+    cat("❌ Data preparation failed:", e$message, "\n")
+    return(NULL)
+  })
+  
+  if (is.null(combined_df)) {
+    cat("❌ Cannot proceed without data\n")
+    return(NULL)
+  }
+  
+  # Step 2: Run breast cancer CPSM pipeline
+  cat("\n🔬 Step 2: CPSM Analysis\n")
+  tryCatch({
+    results <- run_brca_cpsm_pipeline(combined_df, split_ratio)
+  }, error = function(e) {
+    cat("❌ Pipeline failed:", e$message, "\n")
+    return(NULL)
+  })
+  
+  # Step 3: Annotate genes
+  cat("\n🧬 Step 3: Gene Annotation\n")
+  gene_annotation <- annotate_brca_genes(results)
+  results$gene_annotation <- gene_annotation
+  
+  # Step 4: Final summary
+  cat("\n📊 ANALYSIS COMPLETE - BREAST CANCER RESULTS\n")
+  cat("============================================\n")
+  
+  if (!is.null(results)) {
+    cat(sprintf("Dataset: TCGA-BRCA (Breast Cancer)\n"))
+    cat(sprintf("Total samples: %d\n", nrow(combined_df)))
+    
+    if (!is.null(results$train_data)) {
+      cat(sprintf("Training samples: %d\n", nrow(results$train_data)))
+    }
+    
+    if (!is.null(results$test_data)) {
+      cat(sprintf("Test samples: %d\n", nrow(results$test_data)))
+    }
+    
+    if (!is.null(results$significant_genes)) {
+      cat(sprintf("Breast cancer survival genes found: %d\n", length(results$significant_genes)))
+    }
+    
+    if (!is.null(results$best_model)) {
+      cat(sprintf("Best model: %s\n", results$best_model))
+      cat(sprintf("Best C-index: %.3f\n", results$best_c_index))
+      
+      # Performance interpretation
+      if (results$best_c_index > 0.7) {
+        cat("🎉 EXCELLENT predictive performance for breast cancer!\n")
+      } else if (results$best_c_index > 0.6) {
+        cat("✅ GOOD predictive performance for breast cancer!\n")
+      } else if (results$best_c_index > 0.55) {
+        cat("📈 MODERATE predictive performance for breast cancer\n")
+      } else {
+        cat("📊 BASELINE predictive performance for breast cancer\n")
+      }
+    }
+  }
+  
+  return(results)
+}
+
+# ========================================================================
+# USAGE INSTRUCTIONS
+# ========================================================================
+cat("🎗️ BREAST CANCER CPSM PIPELINE - READY!\n")
+cat("========================================\n\n")
+
+cat("📋 USAGE:\n")
+cat("=========\n")
+cat("# Run the breast cancer analysis (80/20 split):\n")
+cat("brca_results <- run_tcga_brca_cpsm_analysis()\n\n")
+
+cat("# Run with 70/30 split for more test events:\n")
+cat("brca_results_70_30 <- run_tcga_brca_cpsm_analysis(split_ratio = 0.7)\n\n")
+
+cat("# Access results:\n")
+cat("brca_results$best_model_object    # Best model details\n")
+cat("brca_results$significant_genes    # Survival-associated genes\n")
+cat("brca_results$gene_annotation      # Gene symbols and descriptions\n")
+cat("brca_results$best_c_index         # Model performance\n\n")
+
+cat("🎯 KEY DIFFERENCES FROM COLORECTAL CANCER:\n")
+cat("==========================================\n")
+cat("• Target: TCGA-BRCA (Breast Cancer) instead of TCGA-COAD\n")
+cat("• Clinical features: ER/PR status, breast cancer staging\n")
+cat("• Gene signatures: Breast cancer-specific survival genes\n")
+cat("• Larger sample size: ~1000+ breast cancer samples\n")
+cat("• Different molecular subtypes and pathways\n\n")
+
+cat("Ready to analyze breast cancer data! 🎗️\n")
+
+# Execute the analysis
+cat("🚀 STARTING BREAST CANCER ANALYSIS...\n")
+brca_results <- run_tcga_brca_cpsm_analysis()
+```
+
+
+
+
+
+```{r}
+# ========================================================================
+# BREAST CANCER VISUALIZATION AND COMPARISON TOOLS
+# Additional functions for analyzing and comparing cancer types
+# ========================================================================
+
+suppressPackageStartupMessages({
+  library(ggplot2)
+  library(survminer)
+  library(gridExtra)
+  library(pheatmap)
+  library(RColorBrewer)
+  library(dplyr)
+  library(reshape2)
+})
+
+# ========================================================================
+# BREAST CANCER-SPECIFIC VISUALIZATIONS
+# ========================================================================
+create_brca_survival_plots <- function(brca_results) {
+  if (is.null(brca_results) || is.null(brca_results$processed_data)) {
+    cat("❌ No data available for plotting\n")
+    return(NULL)
+  }
+  
+  cat("📊 Creating breast cancer survival visualizations...\n")
+  
+  # Prepare data
+  plot_data <- brca_results$processed_data
+  
+  # 1. Overall survival distribution
+  p1 <- ggplot(plot_data, aes(x = OS_month, fill = factor(OS))) +
+    geom_histogram(bins = 30, alpha = 0.7, position = "identity") +
+    scale_fill_manual(values = c("0" = "#e74c3c", "1" = "#3498db"),
+                      labels = c("Censored", "Event")) +
+    theme_minimal() +
+    labs(title = "TCGA-BRCA Survival Distribution",
+         subtitle = "Overall Survival Times",
+         x = "Survival Time (months)",
+         y = "Number of Patients",
+         fill = "Status") +
+    theme(plot.title = element_text(size = 14, face = "bold", color = "#e91e63"))
+  
+  # 2. Survival by ER status (if available)
+  if ("er_status" %in% colnames(plot_data) && length(unique(plot_data$er_status)) > 1) {
+    p2 <- ggplot(plot_data, aes(x = er_status, y = OS_month, fill = er_status)) +
+      geom_boxplot(alpha = 0.7) +
+      scale_fill_brewer(type = "qual", palette = "Set2") +
+      theme_minimal() +
+      labs(title = "Survival by Molecular Subtype",
+           x = "ER/Molecular Status",
+           y = "Survival Time (months)",
+           fill = "Subtype") +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1),
+            plot.title = element_text(size = 12, face = "bold"))
+  } else {
+    p2 <- ggplot(plot_data, aes(x = factor(OS), y = OS_month, fill = factor(OS))) +
+      geom_boxplot(alpha = 0.7) +
+      scale_fill_manual(values = c("0" = "#e74c3c", "1" = "#3498db")) +
+      theme_minimal() +
+      labs(title = "Survival by Event Status",
+           x = "Event Status (0=Censored, 1=Death)",
+           y = "Survival Time (months)")
+  }
+  
+  # 3. Age distribution
+  p3 <- ggplot(plot_data, aes(x = Age, fill = factor(OS))) +
+    geom_density(alpha = 0.6) +
+    scale_fill_manual(values = c("0" = "#e74c3c", "1" = "#3498db"),
+                      labels = c("Censored", "Event")) +
+    theme_minimal() +
+    labs(title = "Age Distribution by Outcome",
+         x = "Age at Diagnosis",
+         y = "Density",
+         fill = "Status")
+  
+  # 4. Staging distribution
+  if ("ajcc_pathologic_tumor_stage" %in% colnames(plot_data)) {
+    stage_counts <- table(plot_data$ajcc_pathologic_tumor_stage)
+    stage_df <- data.frame(
+      Stage = names(stage_counts),
+      Count = as.numeric(stage_counts),
+      stringsAsFactors = FALSE
+    )
+    
+    p4 <- ggplot(stage_df, aes(x = reorder(Stage, Count), y = Count, fill = Stage)) +
+      geom_bar(stat = "identity", alpha = 0.8) +
+      coord_flip() +
+      scale_fill_brewer(type = "qual", palette = "Spectral") +
+      theme_minimal() +
+      labs(title = "Breast Cancer Stage Distribution",
+           x = "AJCC Stage",
+           y = "Number of Patients") +
+      theme(legend.position = "none")
+  } else {
+    p4 <- ggplot(data.frame(x = 1, y = 1), aes(x, y)) +
+      geom_text(label = "Stage data not available", size = 6) +
+      theme_void()
+  }
+  
+  # Combine plots
+  combined_plot <- grid.arrange(p1, p2, p3, p4, ncol = 2, nrow = 2,
+                               top = "TCGA Breast Cancer (BRCA) Analysis Dashboard")
+  
+  # Save plot
+  ggsave("brca_survival_dashboard.png", combined_plot, 
+         width = 14, height = 10, dpi = 300)
+  
+  cat("📁 Breast cancer dashboard saved as 'brca_survival_dashboard.png'\n")
+  
+  return(list(p1 = p1, p2 = p2, p3 = p3, p4 = p4, combined = combined_plot))
+}
+
+# ========================================================================
+# MODEL PERFORMANCE COMPARISON
+# ========================================================================
+compare_cancer_models <- function(brca_results, coad_results = NULL) {
+  cat("📊 CANCER TYPE MODEL COMPARISON\n")
+  cat("===============================\n")
+  
+  # Prepare breast cancer results
+  brca_performance <- data.frame(
+    Cancer_Type = "Breast Cancer (BRCA)",
+    Model = character(0),
+    Train_C_Index = numeric(0),
+    Test_C_Index = numeric(0),
+    stringsAsFactors = FALSE
+  )
+  
+  # Extract BRCA performance
+  for (model_name in c("Model1", "Model2", "Model3")) {
+    if (!is.null(brca_results[[model_name]]) && 
+        !is.null(brca_results[[model_name]]$Error_mat_for_Model)) {
+      
+      error_mat <- brca_results[[model_name]]$Error_mat_for_Model
+      
+      model_type <- switch(model_name,
+                          "Model1" = "Clinical Only",
+                          "Model2" = "Genes Only", 
+                          "Model3" = "Combined")
+      
+      brca_performance <- rbind(brca_performance, data.frame(
+        Cancer_Type = "Breast Cancer (BRCA)",
+        Model = model_type,
+        Train_C_Index = error_mat$C_index[1],
+        Test_C_Index = error_mat$C_index[2],
+        stringsAsFactors = FALSE
+      ))
+    }
+  }
+  
+  # If colorectal results provided, add them
+  if (!is.null(coad_results)) {
+    coad_performance <- data.frame(
+      Cancer_Type = "Colorectal Cancer (COAD)",
+      Model = character(0),
+      Train_C_Index = numeric(0),
+      Test_C_Index = numeric(0),
+      stringsAsFactors = FALSE
+    )
+    
+    for (model_name in c("Model1", "Model2", "Model3")) {
+      if (!is.null(coad_results[[model_name]]) && 
+          !is.null(coad_results[[model_name]]$Error_mat_for_Model)) {
+        
+        error_mat <- coad_results[[model_name]]$Error_mat_for_Model
+        
+        model_type <- switch(model_name,
+                            "Model1" = "Clinical Only",
+                            "Model2" = "Genes Only", 
+                            "Model3" = "Combined")
+        
+        coad_performance <- rbind(coad_performance, data.frame(
+          Cancer_Type = "Colorectal Cancer (COAD)",
+          Model = model_type,
+          Train_C_Index = error_mat$C_index[1],
+          Test_C_Index = error_mat$C_index[2],
+          stringsAsFactors = FALSE
+        ))
+      }
+    }
+    
+    # Combine results
+    all_performance <- rbind(brca_performance, coad_performance)
+    
+    # Create comparison plot
+    p_comparison <- ggplot(all_performance, aes(x = Model, y = Test_C_Index, 
+                                               fill = Cancer_Type)) +
+      geom_bar(stat = "identity", position = "dodge", alpha = 0.8) +
+      geom_text(aes(label = sprintf("%.3f", Test_C_Index)), 
+                position = position_dodge(width = 0.9), vjust = -0.5, size = 3) +
+      scale_fill_manual(values = c("Breast Cancer (BRCA)" = "#e91e63", 
+                                  "Colorectal Cancer (COAD)" = "#2196f3")) +
+      theme_minimal() +
+      labs(title = "Cancer Type Model Performance Comparison",
+           subtitle = "Test Set C-index by Model Type",
+           x = "Model Type",
+           y = "C-index",
+           fill = "Cancer Type") +
+      ylim(0, 1) +
+      theme(plot.title = element_text(size = 14, face = "bold"),
+            legend.position = "bottom")
+    
+    ggsave("cancer_comparison.png", p_comparison, width = 10, height = 6, dpi = 300)
+    
+  } else {
+    all_performance <- brca_performance
+    
+    # Create breast cancer only plot
+    p_comparison <- ggplot(all_performance, aes(x = Model, y = Test_C_Index, fill = Model)) +
+      geom_bar(stat = "identity", alpha = 0.8) +
+      geom_text(aes(label = sprintf("%.3f", Test_C_Index)), vjust = -0.5) +
+      scale_fill_brewer(type = "qual", palette = "Set2") +
+      theme_minimal() +
+      labs(title = "Breast Cancer Model Performance",
+           subtitle = "Test Set C-index by Model Type",
+           x = "Model Type",
+           y = "C-index") +
+      ylim(0, 1) +
+      theme(plot.title = element_text(size = 14, face = "bold", color = "#e91e63"),
+            legend.position = "none")
+  }
+  
+  # Print summary table
+  cat("\nModel Performance Summary:\n")
+  print(all_performance)
+  
+  return(list(performance_data = all_performance, plot = p_comparison))
+}
+
+# ========================================================================
+# GENE SIGNATURE HEATMAP
+# ========================================================================
+create_gene_signature_heatmap <- function(brca_results, top_n = 20) {
+  if (is.null(brca_results$significant_genes) || 
+      length(brca_results$significant_genes) == 0) {
+    cat("❌ No significant genes for heatmap\n")
+    return(NULL)
+  }
+  
+  cat("🔥 Creating breast cancer gene signature heatmap...\n")
+  
+  # Get top genes
+  top_genes <- head(brca_results$significant_genes, top_n)
+  
+  # Extract expression data for top genes
+  if (!is.null(brca_results$Train_Uni_sig_data)) {
+    expr_data <- brca_results$Train_Uni_sig_data
+    
+    # Select gene columns
+    gene_cols <- which(colnames(expr_data) %in% top_genes)
+    
+    if (length(gene_cols) > 0) {
+      gene_expr <- expr_data[, gene_cols]
+      
+      # Convert ENSEMBL to gene symbols for labeling
+      ensembl_clean <- gsub("\\.\\d+$", "", colnames(gene_expr))
+      
+      tryCatch({
+        gene_symbols <- mapIds(org.Hs.eg.db,
+                              keys = ensembl_clean,
+                              column = "SYMBOL",
+                              keytype = "ENSEMBL",
+                              multiVals = "first")
+        
+        # Use symbols where available, otherwise use ENSEMBL
+        labels <- ifelse(is.na(gene_symbols), ensembl_clean, gene_symbols)
+        colnames(gene_expr) <- labels
+        
+        # Create survival status annotation
+        survival_status <- factor(expr_data$OS, levels = c(0, 1), 
+                                 labels = c("Censored", "Event"))
+        
+        annotation_row <- data.frame(
+          Survival = survival_status,
+          row.names = rownames(gene_expr)
+        )
+        
+        annotation_colors <- list(
+          Survival = c("Censored" = "#e74c3c", "Event" = "#3498db")
+        )
+        
+        # Create heatmap
+        pheatmap(t(gene_expr),
+                scale = "row",
+                clustering_distance_rows = "correlation",
+                clustering_distance_cols = "correlation",
+                annotation_col = annotation_row,
+                annotation_colors = annotation_colors,
+                color = colorRampPalette(c("#2166ac", "white", "#d73027"))(100),
+                main = "Breast Cancer Gene Signature Heatmap",
+                filename = "brca_gene_signature_heatmap.png",
+                width = 12,
+                height = 8)
+        
+        cat("📁 Gene signature heatmap saved as 'brca_gene_signature_heatmap.png'\n")
+        
+        return(gene_expr)
+        
+      }, error = function(e) {
+        cat("❌ Error creating heatmap:", e$message, "\n")
+        return(NULL)
+      })
+    }
+  }
+  
+  return(NULL)
+}
+
+# ========================================================================
+# SURVIVAL CURVES BY GENE EXPRESSION
+# ========================================================================
+create_gene_survival_curves <- function(brca_results, gene_name = NULL, top_n = 4) {
+  if (is.null(brca_results$significant_genes)) {
+    cat("❌ No significant genes available\n")
+    return(NULL)
+  }
+  
+  # Select genes to plot
+  if (is.null(gene_name)) {
+    genes_to_plot <- head(brca_results$significant_genes, top_n)
+  } else {
+    genes_to_plot <- gene_name
+  }
+  
+  cat(sprintf("📈 Creating survival curves for %d breast cancer genes...\n", 
+              length(genes_to_plot)))
+  
+  plot_list <- list()
+  
+  for (i in 1:length(genes_to_plot)) {
+    gene <- genes_to_plot[i]
+    
+    if (gene %in% colnames(brca_results$Train_Uni_sig_data)) {
+      # Prepare data
+      plot_data <- data.frame(
+        time = brca_results$Train_Uni_sig_data$OS_month,
+        status = brca_results$Train_Uni_sig_data$OS,
+        expression = brca_results$Train_Uni_sig_data[[gene]]
+      )
+      
+      # Remove missing values
+      plot_data <- plot_data[complete.cases(plot_data), ]
+      
+      if (nrow(plot_data) > 10) {
+        # Create high/low expression groups
+        median_expr <- median(plot_data$expression)
+        plot_data$group <- ifelse(plot_data$expression > median_expr, "High", "Low")
+        
+        # Fit survival curves
+        fit <- survfit(Surv(time, status) ~ group, data = plot_data)
+        
+        # Get gene symbol
+        ensembl_clean <- gsub("\\.\\d+$", "", gene)
+        gene_symbol <- tryCatch({
+          mapIds(org.Hs.eg.db, keys = ensembl_clean, column = "SYMBOL", 
+                keytype = "ENSEMBL", multiVals = "first")
+        }, error = function(e) ensembl_clean)
+        
+        if (is.na(gene_symbol)) gene_symbol <- ensembl_clean
+        
+        # Create plot
+        p <- ggsurvplot(
+          fit,
+          data = plot_data,
+          pval = TRUE,
+          conf.int = FALSE,
+          risk.table = FALSE,
+          ggtheme = theme_minimal(),
+          palette = c("#e91e63", "#2196f3"),
+          title = paste("Survival by", gene_symbol, "Expression"),
+          xlab = "Time (months)",
+          ylab = "Survival Probability",
+          legend.title = "Expression",
+          legend.labs = c("High", "Low")
+        )
+        
+        plot_list[[gene_symbol]] <- p
+      }
+    }
+  }
+  
+  # Save individual plots
+  for (gene_name in names(plot_list)) {
+    filename <- paste0("brca_", gsub("[^A-Za-z0-9]", "_", gene_name), "_survival.png")
+    ggsave(filename, plot_list[[gene_name]]$plot, width = 8, height = 6, dpi = 300)
+  }
+  
+  cat(sprintf("📁 Saved %d gene survival curves\n", length(plot_list)))
+  
+  return(plot_list)
+}
+
+# ========================================================================
+# COMPREHENSIVE BREAST CANCER REPORT
+# ========================================================================
+generate_brca_report <- function(brca_results) {
+  cat("📋 GENERATING COMPREHENSIVE BREAST CANCER REPORT\n")
+  cat("================================================\n")
+  
+  # Create all visualizations
+  survival_plots <- create_brca_survival_plots(brca_results)
+  performance_comparison <- compare_cancer_models(brca_results)
+  gene_heatmap <- create_gene_signature_heatmap(brca_results)
+  gene_curves <- create_gene_survival_curves(brca_results)
+  
+  # Generate summary report
+  report_text <- c(
+    "TCGA BREAST CANCER (BRCA) CPSM ANALYSIS REPORT",
+    "==============================================",
+    paste("Generated:", Sys.time()),
+    "",
+    "DATASET SUMMARY:",
+    "---------------"
+  )
+  
+  if (!is.null(brca_results$processed_data)) {
+    n_samples <- nrow(brca_results$processed_data)
+    n_events <- sum(brca_results$processed_data$OS)
+    event_rate <- 100 * mean(brca_results$processed_data$OS)
+    
+    report_text <- c(report_text,
+      paste("Total samples:", n_samples),
+      paste("Events (deaths):", n_events, sprintf("(%.1f%%)", event_rate)),
+      paste("Median follow-up:", sprintf("%.1f months", 
+                                       median(brca_results$processed_data$OS_month)))
+    )
+  }
+  
+  report_text <- c(report_text, "", "GENE DISCOVERY:", "---------------")
+  
+  if (!is.null(brca_results$significant_genes)) {
+    report_text <- c(report_text,
+      paste("Significant survival genes found:", length(brca_results$significant_genes)),
+      "",
+      "Top 10 Breast Cancer Survival Genes:",
+      "======================================"
+    )
+    
+    if (!is.null(brca_results$gene_annotation)) {
+      for (i in 1:min(10, nrow(brca_results$gene_annotation))) {
+        g <- brca_results$gene_annotation[i, ]
+        report_text <- c(report_text,
+          sprintf("%2d. %s (%s)", i, g$Symbol, g$ENSEMBL)
+        )
+        if (!is.na(g$HR)) {
+          effect <- if(g$HR > 1) "Risk" else "Protective"
+          report_text <- c(report_text,
+            sprintf("    HR: %.3f, P: %.2e, Effect: %s", g$HR, g$P_value, effect)
+          )
+        }
+      }
+    }
+  }
+  
+  report_text <- c(report_text, "", "MODEL PERFORMANCE:", "==================")
+  
+  if (!is.null(brca_results$best_model)) {
+    report_text <- c(report_text,
+      paste("Best model:", brca_results$best_model),
+      paste("Best C-index:", sprintf("%.3f", brca_results$best_c_index))
+    )
+    
+    if (brca_results$best_c_index > 0.7) {
+      report_text <- c(report_text, "Performance: EXCELLENT")
+    } else if (brca_results$best_c_index > 0.6) {
+      report_text <- c(report_text, "Performance: GOOD")
+    } else {
+      report_text <- c(report_text, "Performance: MODERATE")
+    }
+  }
+  
+  report_text <- c(report_text, 
+    "",
+    "FILES GENERATED:",
+    "================",
+    "• brca_survival_dashboard.png - Survival analysis dashboard",
+    "• brca_gene_signature_heatmap.png - Gene expression heatmap", 
+    "• brca_gene_annotation.csv - Gene symbols and annotations",
+    "• brca_*_survival.png - Individual gene survival curves",
+    "• brca_analysis_report.txt - This summary report"
+  )
+  
+  # Save report
+  writeLines(report_text, "brca_analysis_report.txt")
+  
+  cat("📁 Comprehensive report saved as 'brca_analysis_report.txt'\n")
+  cat("📊 All visualizations and data files generated!\n")
+  
+  return(list(
+    report_text = report_text,
+    plots = list(
+      survival = survival_plots,
+      performance = performance_comparison,
+      heatmap = gene_heatmap,
+      gene_curves = gene_curves
+    )
+  ))
+}
+
+# ========================================================================
+# USAGE EXAMPLES
+# ========================================================================
+cat("🎗️ BREAST CANCER VISUALIZATION TOOLS - READY!\n")
+cat("==============================================\n\n")
+
+cat("📋 USAGE EXAMPLES:\n")
+cat("==================\n")
+cat("# Create all breast cancer visualizations:\n")
+cat("brca_report <- generate_brca_report(brca_results)\n\n")
+
+cat("# Individual visualization functions:\n")
+cat("survival_plots <- create_brca_survival_plots(brca_results)\n")
+cat("performance_plot <- compare_cancer_models(brca_results, coad_results)\n")
+cat("gene_heatmap <- create_gene_signature_heatmap(brca_results)\n")
+cat("gene_curves <- create_gene_survival_curves(brca_results)\n\n")
+
+cat("# Compare different cancer types:\n")
+cat("comparison <- compare_cancer_models(brca_results, coad_results)\n\n")
+
+cat("🎯 FEATURES:\n")
+cat("============\n")
+cat("• Breast cancer-specific survival dashboards\n")
+cat("• Gene signature heatmaps with survival annotation\n")
+cat("• Individual gene survival curves\n") 
+cat("• Cancer type performance comparisons\n")
+cat("• Comprehensive automated reports\n")
+cat("• High-quality publication-ready plots\n\n")
+
+cat("Ready to visualize breast cancer results! 🎗️\n")
+
+brca_report <- generate_brca_report(brca_results)
+
+
+brca_report <- generate_brca_report(brca_results)
+brca_results$Model1$survival_result_based_on_MTLR  # Expected: 0.6-0.75 (vs 0.54 for COAD)
+brca_results$significant_genes  # Breast cancer survival genes
+
+```
+
