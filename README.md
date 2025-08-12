@@ -47,5 +47,42 @@ Calibration: Well-calibrated across risk groups
 Validation: 80/20 train-test split
 
 
+Clinical Implications
+
+Risk Stratification: Multi-gene signature improves patient classification
+
+Therapeutic Targets:
+
+PSME2 enhancement for immunotherapy
+
+UGP2 inhibition for high-risk patients
+
+Biomarker Panel: 5-gene signature for clinical implementation
+
+
+Future Directions
+
+ External validation on METABRIC cohort
+ 
+ Integration with mutation data
+ 
+ Pathway enrichment analysis
+ 
+ Interactive Shiny application
+ 
+ Docker containerization
+
+Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss proposed changes.
+
+Contact
+
+Denver Ncube
+
+Email: denver.ncube@gmail.com
+
+LinkedIn: https://www.linkedin.com/in/denver-ncube-n3d/
+
 <img width="4200" height="3000" alt="brca_survival_dashboard" src="https://github.com/user-attachments/assets/9b508dcc-d7d6-40a5-8a70-7623f02b3911" />
 
