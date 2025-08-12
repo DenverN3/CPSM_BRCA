@@ -86,3 +86,7 @@ LinkedIn: https://www.linkedin.com/in/denver-ncube-n3d/
 
 <img width="4200" height="3000" alt="brca_survival_dashboard" src="https://github.com/user-attachments/assets/9b508dcc-d7d6-40a5-8a70-7623f02b3911" />
 
+Citation If using this analysis, please cite:
+
+CPSM package: https://doi.org/10.1101/2024.11.14.623597 CPSM: R-package of an Automated Machine Learning Pipeline for Predicting the Survival Probability of Single Cancer Patient Harpreet Kaur, Pijush Das, Kevin Camphausen, Uma Shankavaram
+
