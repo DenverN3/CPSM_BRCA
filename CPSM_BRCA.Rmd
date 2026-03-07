@@ -1247,8 +1247,6 @@ generate_brca_report <- function(brca_results) {
 cat("🎗️ BREAST CANCER VISUALIZATION TOOLS - READY!\n")
 cat("==============================================\n\n")
 
-cat("📋 USAGE EXAMPLES:\n")
-cat("==================\n")
 cat("# Create all breast cancer visualizations:\n")
 cat("brca_report <- generate_brca_report(brca_results)\n\n")
 
