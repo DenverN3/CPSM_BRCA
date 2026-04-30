@@ -1,0 +1,284 @@
+"","Age","subtype","gender","race","ajcc_pathologic_tumor_stage","histological_type","histological_grade","treatment_outcome_first_course","radiation_treatment_adjuvant","sample_type","type","OS","OS.time","DSS","DSS.time","DFI","DFI.time","PFI","PFI.time"
+"TCGA-06-6390-01A-11R-A96S-41",58,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,164,1,164,NA,NA,NA,NA
+"TCGA-06-5411-01A-01R-1849-01",51,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,254,1,254,NA,NA,NA,NA
+"TCGA-12-3648-01A-01R-A96T-41",61,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,819,1,819,NA,NA,NA,NA
+"TCGA-06-A7TK-01A-21R-A96S-41",64,"GBM","male","black or african american","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,444,1,444,NA,NA,NA,NA
+"TCGA-19-5959-01A-11R-A96U-41",77,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,511,1,511,NA,NA,NA,NA
+"TCGA-06-0166-01A-01R-A96R-41",51,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,178,1,178,NA,NA,NA,NA
+"TCGA-06-5859-01A-01R-1849-01",63,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,139,0,139,NA,NA,NA,NA
+"TCGA-14-4157-01A-01R-A96U-41",40,"GBM","male","black or african american","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,104,0,104,NA,NA,NA,NA
+"TCGA-12-5299-01A-02R-1849-01",56,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,98,1,98,NA,NA,NA,NA
+"TCGA-06-5416-01A-01R-1849-01",23,"GBM","female","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,204,0,204,NA,NA,NA,NA
+"TCGA-19-1390-01A-01R-1850-01",63,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,772,1,772,NA,NA,NA,NA
+"TCGA-16-0846-01A-01R-A96U-41",85,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,119,1,119,NA,NA,NA,NA
+"TCGA-02-0047-01A-01R-1849-01",78,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,448,1,448,NA,NA,NA,NA
+"TCGA-14-0817-01A-01R-A96T-41",69,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,164,1,164,NA,NA,NA,NA
+"TCGA-26-5136-01B-01R-1850-01",78,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,577,1,577,NA,NA,NA,NA
+"TCGA-28-2514-01A-02R-1850-01",45,"GBM","male","asian","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,160,0,160,NA,NA,NA,NA
+"TCGA-19-2620-01A-01R-1850-01",70,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,148,1,148,NA,NA,NA,NA
+"TCGA-12-3650-01A-01R-1849-01",46,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,333,1,333,NA,NA,NA,NA
+"TCGA-12-0772-01A-01R-A96S-41",46,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,1638,1,1638,NA,NA,NA,NA
+"TCGA-06-2569-01A-01R-A96S-41",24,"GBM","female","black or african american","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,13,0,13,NA,NA,NA,NA
+"TCGA-06-0644-01A-02R-1849-01",71,"GBM","male","black or african american","Unknown","Unknown","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,384,1,384,NA,NA,NA,NA
+"TCGA-41-4097-01A-01R-1850-01",63,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,6,1,6,NA,NA,NA,NA
+"TCGA-26-5135-01A-01R-1850-01",72,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,270,1,270,NA,NA,NA,NA
+"TCGA-32-1970-01A-01R-1850-01",59,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,468,1,468,NA,NA,NA,NA
+"TCGA-41-2571-01A-01R-1850-01",89,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,26,1,26,NA,NA,NA,NA
+"TCGA-14-0871-01A-01R-1849-01",74,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,880,1,880,NA,NA,NA,NA
+"TCGA-28-5213-01A-01R-1850-01",72,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,951,0,951,NA,NA,NA,NA
+"TCGA-27-1834-01A-01R-1850-01",56,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,1233,1,1233,NA,NA,NA,NA
+"TCGA-12-0775-01A-01R-A96S-41",75,"GBM","female","black or african american","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,232,1,232,NA,NA,NA,NA
+"TCGA-06-5414-01A-01R-1849-01",61,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,273,0,273,NA,NA,NA,NA
+"TCGA-06-0190-01A-01R-1849-01",62,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,317,1,317,NA,NA,NA,NA
+"TCGA-06-6388-01A-12R-A96S-41",64,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,159,1,159,NA,NA,NA,NA
+"TCGA-02-2486-01A-01R-1849-01",64,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,618,1,618,NA,NA,NA,NA
+"TCGA-14-0790-01B-01R-A96T-41",64,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,419,1,419,NA,NA,NA,NA
+"TCGA-06-6694-01A-12R-A96S-41",76,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,224,1,224,NA,NA,NA,NA
+"TCGA-12-1095-01A-01R-A96T-41",65,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,482,1,482,NA,NA,NA,NA
+"TCGA-06-5410-01A-01R-A96S-41",72,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,108,1,108,NA,NA,NA,NA
+"TCGA-76-4926-01B-01R-1850-01",68,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,138,1,138,NA,NA,NA,NA
+"TCGA-19-5960-01A-11R-1850-01",56,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,455,1,455,NA,NA,NA,NA
+"TCGA-06-0878-01A-01R-1849-01",74,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,218,0,218,NA,NA,NA,NA
+"TCGA-14-0781-01B-01R-A96T-41",49,"GBM","male","black or african american","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,29,1,29,NA,NA,NA,NA
+"TCGA-06-1086-01A-02R-A96S-41",42,"GBM","male","black or african american","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,208,1,208,NA,NA,NA,NA
+"TCGA-76-4927-01A-01R-1850-01",58,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,535,1,535,NA,NA,NA,NA
+"TCGA-16-0849-01A-01R-A96U-41",54,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,793,0,793,NA,NA,NA,NA
+"TCGA-06-1087-01A-02R-A96S-41",75,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,123,1,123,NA,NA,NA,NA
+"TCGA-06-1805-01A-01R-A96S-41",28,"GBM","female","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,1031,0,1031,NA,NA,NA,NA
+"TCGA-14-0787-01A-01R-A96T-41",69,"GBM","male","asian","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,68,1,68,NA,NA,NA,NA
+"TCGA-19-4065-01A-01R-A96U-41",36,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,214,0,214,NA,NA,NA,NA
+"TCGA-27-2524-01A-01R-1850-01",56,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,231,1,231,NA,NA,NA,NA
+"TCGA-28-2509-01A-01R-1850-01",77,"GBM","female","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,145,0,145,NA,NA,NA,NA
+"TCGA-26-5133-01A-01R-1850-01",59,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,452,0,452,NA,NA,NA,NA
+"TCGA-14-1396-01A-01R-A96T-41",78,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,34,1,34,NA,NA,NA,NA
+"TCGA-41-3915-01A-01R-1850-01",48,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,360,1,360,NA,NA,NA,NA
+"TCGA-02-0026-01B-01R-A96R-41",27,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,748,1,748,NA,NA,NA,NA
+"TCGA-06-0747-01A-01R-1849-01",53,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,82,1,82,NA,NA,NA,NA
+"TCGA-19-1787-01B-01R-1850-01",48,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,385,1,385,NA,NA,NA,NA
+"TCGA-06-0141-01A-01R-1849-01",62,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,313,1,313,NA,NA,NA,NA
+"TCGA-12-1092-01B-01R-A96T-41",58,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,661,1,661,NA,NA,NA,NA
+"TCGA-28-5208-01A-01R-1850-01",52,"GBM","male","white","Unknown","Unknown","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,544,1,544,NA,NA,NA,NA
+"TCGA-27-2521-01A-01R-1850-01",34,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,510,1,510,NA,NA,NA,NA
+"TCGA-06-0745-01A-01R-A96S-41",59,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,239,1,239,NA,NA,NA,NA
+"TCGA-16-0850-01A-01R-A96U-41",52,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,498,1,498,NA,NA,NA,NA
+"TCGA-32-2632-01A-01R-1850-01",80,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,269,1,269,NA,NA,NA,NA
+"TCGA-16-1056-01B-01R-A96U-41",55,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,426,1,426,NA,NA,NA,NA
+"TCGA-06-2567-01A-01R-1849-01",65,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,133,1,133,NA,NA,NA,NA
+"TCGA-06-A5U0-01A-11R-A96S-41",21,"GBM","female","black or african american","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,815,0,815,NA,NA,NA,NA
+"TCGA-14-1827-01A-01R-A96U-41",51,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,179,1,179,NA,NA,NA,NA
+"TCGA-16-1063-01B-01R-A96U-41",72,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,425,1,425,NA,NA,NA,NA
+"TCGA-27-1830-01A-01R-1850-01",57,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,154,1,154,NA,NA,NA,NA
+"TCGA-06-5417-01A-01R-A96S-41",45,"GBM","female","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,155,0,155,NA,NA,NA,NA
+"TCGA-06-5415-01A-01R-A96S-41",60,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,260,0,260,NA,NA,NA,NA
+"TCGA-76-4931-01A-01R-1850-01",70,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,279,1,279,NA,NA,NA,NA
+"TCGA-12-1093-01A-01R-A96T-41",66,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,486,1,486,NA,NA,NA,NA
+"TCGA-14-0789-01A-01R-1849-01",54,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,342,1,342,NA,NA,NA,NA
+"TCGA-06-A5U1-01A-11R-A96S-41",78,"GBM","female","black or african american","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,57,1,57,NA,NA,NA,NA
+"TCGA-14-0865-01B-01R-A96T-41",67,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,502,1,502,NA,NA,NA,NA
+"TCGA-02-0070-01A-01R-A96R-41",70,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,762,0,762,NA,NA,NA,NA
+"TCGA-14-1795-01A-01R-A96U-41",66,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,60,1,60,NA,NA,NA,NA
+"TCGA-06-A6S0-01A-11R-A96S-41",79,"GBM","male","black or african american","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,95,1,95,NA,NA,NA,NA
+"TCGA-06-0645-01A-01R-A96R-41",55,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,175,1,175,NA,NA,NA,NA
+"TCGA-06-5413-01A-01R-1849-01",67,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,268,0,268,NA,NA,NA,NA
+"TCGA-28-5220-01A-01R-1850-01",67,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,388,1,388,NA,NA,NA,NA
+"TCGA-06-0185-01A-01R-A96R-41",54,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,2246,0,2246,NA,NA,NA,NA
+"TCGA-06-0214-01A-02R-A96R-41",66,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,457,1,457,NA,NA,NA,NA
+"TCGA-27-1835-01A-01R-1850-01",53,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,648,1,648,NA,NA,NA,NA
+"TCGA-06-0197-01A-02R-A96R-41",65,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,169,1,169,NA,NA,NA,NA
+"TCGA-06-0875-01A-01R-A96S-41",61,"GBM","female","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,1322,0,1322,NA,NA,NA,NA
+"TCGA-02-2483-01A-01R-A96R-41",43,"GBM","male","asian","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,466,0,466,NA,NA,NA,NA
+"TCGA-19-2631-01A-01R-A96U-41",74,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,213,1,213,NA,NA,NA,NA
+"TCGA-19-5955-01A-11R-A96U-41",83,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,54,1,54,NA,NA,NA,NA
+"TCGA-06-0167-01A-01R-A96R-41",44,"GBM","male","black or african american","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,347,1,347,NA,NA,NA,NA
+"TCGA-06-0129-01A-01R-1849-01",30,"GBM","male","asian","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,1024,1,1024,NA,NA,NA,NA
+"TCGA-06-0145-01A-01R-A96R-41",53,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,71,1,71,NA,NA,NA,NA
+"TCGA-06-0130-01A-01R-1849-01",54,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,394,1,394,NA,NA,NA,NA
+"TCGA-06-0125-01A-01R-1849-01",63,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,1448,1,1448,NA,NA,NA,NA
+"TCGA-06-0139-01A-01R-1849-01",40,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,362,1,362,NA,NA,NA,NA
+"TCGA-06-0744-01A-01R-1849-01",66,"GBM","male","white","Unknown","Unknown","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,1426,1,1426,NA,NA,NA,NA
+"TCGA-12-0662-01A-01R-A96S-41",51,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,1161,1,1161,NA,NA,NA,NA
+"TCGA-06-0178-01A-01R-1849-01",38,"GBM","male","white","Unknown","Unknown","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,2681,1,2681,NA,NA,NA,NA
+"TCGA-14-1823-01A-01R-1849-01",58,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,543,1,543,NA,NA,NA,NA
+"TCGA-06-0176-01A-02R-A96R-41",34,"GBM","male","asian","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,2768,0,2768,NA,NA,NA,NA
+"TCGA-12-0818-01A-01R-A96T-41",45,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,2791,1,2791,NA,NA,NA,NA
+"TCGA-27-2519-01A-01R-1850-01",48,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,550,1,550,NA,NA,NA,NA
+"TCGA-14-1829-01A-01R-1850-01",57,"GBM","male","black or african american","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,218,0,218,NA,NA,NA,NA
+"TCGA-14-1034-01A-01R-A96T-41",60,"GBM","female","not reported","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,485,1,485,NA,NA,NA,NA
+"TCGA-12-0619-01A-01R-1849-01",60,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,1062,1,1062,NA,NA,NA,NA
+"TCGA-06-A7TL-01A-11R-A96S-41",30,"GBM","female","black or african american","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,539,0,539,NA,NA,NA,NA
+"TCGA-06-6695-01A-11R-A96S-41",64,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,253,0,253,NA,NA,NA,NA
+"TCGA-28-5209-01A-01R-1850-01",66,"GBM","female","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,442,0,442,NA,NA,NA,NA
+"TCGA-06-0882-01A-01R-1849-01",30,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,632,1,632,NA,NA,NA,NA
+"TCGA-06-0210-01A-01R-1849-01",72,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,225,1,225,NA,NA,NA,NA
+"TCGA-28-5204-01A-01R-1850-01",72,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,454,1,454,NA,NA,NA,NA
+"TCGA-12-1597-01B-01R-1849-01",62,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,675,1,675,NA,NA,NA,NA
+"TCGA-12-1598-01A-01R-A96T-41",75,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,476,1,476,NA,NA,NA,NA
+"TCGA-19-1387-01A-01R-A96U-41",81,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,181,0,181,NA,NA,NA,NA
+"TCGA-32-2615-01A-01R-1850-01",62,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,485,1,485,NA,NA,NA,NA
+"TCGA-12-3653-01A-01R-A96T-41",34,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,442,1,442,NA,NA,NA,NA
+"TCGA-28-2513-01A-01R-1850-01",69,"GBM","female","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,222,0,222,NA,NA,NA,NA
+"TCGA-19-1389-01A-01R-A96U-41",51,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,141,1,141,NA,NA,NA,NA
+"TCGA-08-0386-01A-01R-1849-01",74,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,548,1,548,NA,NA,NA,NA
+"TCGA-06-0877-01A-01R-A96S-41",78,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,204,1,204,NA,NA,NA,NA
+"TCGA-06-0211-01A-01R-A96R-41",47,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,360,1,360,NA,NA,NA,NA
+"TCGA-06-0132-01A-02R-1849-01",49,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,771,1,771,NA,NA,NA,NA
+"TCGA-26-1442-01A-01R-1850-01",43,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,953,0,953,NA,NA,NA,NA
+"TCGA-06-0187-01A-01R-A96R-41",69,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,828,1,828,NA,NA,NA,NA
+"TCGA-41-2572-01A-01R-1850-01",67,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,406,1,406,NA,NA,NA,NA
+"TCGA-12-0819-01A-01R-A96T-41",49,"GBM","female","black or african american","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,754,1,754,NA,NA,NA,NA
+"TCGA-06-0750-01A-01R-A96S-41",43,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,28,1,28,NA,NA,NA,NA
+"TCGA-76-4925-01A-01R-1850-01",76,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,146,1,146,NA,NA,NA,NA
+"TCGA-32-2634-01A-01R-1850-01",82,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,693,0,693,NA,NA,NA,NA
+"TCGA-14-0786-01B-01R-A96T-41",50,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,701,1,701,NA,NA,NA,NA
+"TCGA-12-1600-01A-01R-A96T-41",86,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,448,1,448,NA,NA,NA,NA
+"TCGA-12-3652-01A-01R-A96T-41",60,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,1062,1,1062,NA,NA,NA,NA
+"TCGA-06-1802-01A-01R-A96S-41",61,"GBM","male","white","Unknown","Unknown","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,466,1,466,NA,NA,NA,NA
+"TCGA-12-1599-01A-01R-A96T-41",47,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,781,1,781,NA,NA,NA,NA
+"TCGA-19-1388-01A-01R-A96U-41",58,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,394,1,394,NA,NA,NA,NA
+"TCGA-32-2638-01A-01R-1850-01",67,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,766,1,766,NA,NA,NA,NA
+"TCGA-06-0208-01A-01R-A96R-41",52,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,256,1,256,NA,NA,NA,NA
+"TCGA-02-2470-01A-01R-A96R-41",57,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,393,1,393,NA,NA,NA,NA
+"TCGA-06-0154-01A-02R-A96R-41",54,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,424,1,424,NA,NA,NA,NA
+"TCGA-06-0184-01A-01R-1849-01",63,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,2126,1,2126,NA,NA,NA,NA
+"TCGA-06-0138-01A-02R-1849-01",43,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,737,1,737,NA,NA,NA,NA
+"TCGA-06-0140-01A-01R-A96R-41",86,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,6,1,6,NA,NA,NA,NA
+"TCGA-12-0691-01A-01R-A96S-41",63,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,369,1,369,NA,NA,NA,NA
+"TCGA-28-2499-01A-01R-1850-01",59,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",0,95,0,95,NA,NA,NA,NA
+"TCGA-15-1444-01A-02R-A96U-41",21,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,1537,1,1537,NA,NA,NA,NA
+"TCGA-27-2523-01A-01R-1850-01",63,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,489,1,489,NA,NA,NA,NA
+"TCGA-06-1804-01A-01R-1849-01",81,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,414,1,414,NA,NA,NA,NA
+"TCGA-14-1453-01A-01R-A96T-41",69,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,35,1,35,NA,NA,NA,NA
+"TCGA-14-2555-01B-01R-A96U-41",44,"GBM","female","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,242,0,242,NA,NA,NA,NA
+"TCGA-28-1747-01C-01R-1850-01",44,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,77,1,77,NA,NA,NA,NA
+"TCGA-14-1455-01A-01R-A96T-41",61,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,28,1,28,NA,NA,NA,NA
+"TCGA-06-0171-01A-02R-A96R-41",65,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,399,1,399,NA,NA,NA,NA
+"TCGA-12-5301-01A-01R-A96T-41",59,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,62,1,62,NA,NA,NA,NA
+"TCGA-12-0822-01A-01R-A96T-41",46,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,715,1,715,NA,NA,NA,NA
+"TCGA-06-0881-01A-02R-A96S-41",50,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,504,1,504,NA,NA,NA,NA
+"TCGA-26-5134-01A-01R-1850-01",74,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,167,0,167,NA,NA,NA,NA
+"TCGA-32-4213-01A-01R-1850-01",47,"GBM","female","white","Unknown","Unknown","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,604,0,604,NA,NA,NA,NA
+"TCGA-12-0692-01A-01R-A96S-41",75,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,111,1,111,NA,NA,NA,NA
+"TCGA-06-0219-01A-01R-1849-01",67,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,22,1,22,NA,NA,NA,NA
+"TCGA-19-2624-01A-01R-1850-01",51,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,5,1,5,NA,NA,NA,NA
+"TCGA-14-1451-01A-01R-A96T-41",39,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,703,1,703,NA,NA,NA,NA
+"TCGA-27-2526-01A-01R-1850-01",79,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,87,1,87,NA,NA,NA,NA
+"TCGA-14-1454-01A-01R-A96T-41",54,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,918,1,918,NA,NA,NA,NA
+"TCGA-06-0156-01A-02R-1849-01",57,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,178,1,178,NA,NA,NA,NA
+"TCGA-19-2619-01A-01R-A96U-41",55,"GBM","female","black or african american","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,294,0,294,NA,NA,NA,NA
+"TCGA-06-2557-01A-01R-A96S-41",76,"GBM","male","black or african american","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,33,1,33,NA,NA,NA,NA
+"TCGA-32-2616-01A-01R-1850-01",48,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,224,1,224,NA,NA,NA,NA
+"TCGA-16-1045-01B-01R-1850-01",49,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,883,1,883,NA,NA,NA,NA
+"TCGA-06-6391-01A-11R-A96S-41",44,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,45,1,45,NA,NA,NA,NA
+"TCGA-12-0615-01A-01R-A96S-41",78,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,467,1,467,NA,NA,NA,NA
+"TCGA-16-1460-01A-01R-A96U-41",36,"GBM","female","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,195,0,195,NA,NA,NA,NA
+"TCGA-06-0168-01A-01R-1849-01",59,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,598,1,598,NA,NA,NA,NA
+"TCGA-06-6700-01A-12R-A96S-41",76,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,145,0,145,NA,NA,NA,NA
+"TCGA-19-5947-01A-11R-A96U-41",47,"GBM","female","black or african american","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,202,1,202,NA,NA,NA,NA
+"TCGA-26-5132-01A-01R-1850-01",74,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,286,0,286,NA,NA,NA,NA
+"TCGA-02-0055-01A-01R-1849-01",62,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,76,1,76,NA,NA,NA,NA
+"TCGA-19-1385-01A-02R-A96U-41",69,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,327,1,327,NA,NA,NA,NA
+"TCGA-06-0216-01B-01R-A96R-41",61,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,735,1,735,NA,NA,NA,NA
+"TCGA-06-1084-01A-01R-A96S-41",54,"GBM","male","black or african american","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,728,1,728,NA,NA,NA,NA
+"TCGA-06-2563-01A-01R-1849-01",72,"GBM","female","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,932,0,932,NA,NA,NA,NA
+"TCGA-12-0618-01A-01R-1849-01",49,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,395,1,395,NA,NA,NA,NA
+"TCGA-12-0670-01B-01R-A96S-41",60,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,790,1,790,NA,NA,NA,NA
+"TCGA-06-6698-01A-13T-1900-53",53,"GBM","female","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,145,0,145,NA,NA,NA,NA
+"TCGA-06-0646-01A-01R-A96R-41",60,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,175,1,175,NA,NA,NA,NA
+"TCGA-15-0742-01A-01R-A96U-41",65,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,419,1,419,NA,NA,NA,NA
+"TCGA-19-1386-01A-01R-A96U-41",51,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,276,1,276,NA,NA,NA,NA
+"TCGA-06-0152-01A-02R-A96R-41",68,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,375,1,375,NA,NA,NA,NA
+"TCGA-02-0038-01A-01R-A96R-41",48,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,326,1,326,NA,NA,NA,NA
+"TCGA-06-0169-01A-01R-A96R-41",68,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,100,1,100,NA,NA,NA,NA
+"TCGA-12-0827-01A-01R-A96T-41",38,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,1179,1,1179,NA,NA,NA,NA
+"TCGA-06-0238-01A-02R-1849-01",46,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,405,1,405,NA,NA,NA,NA
+"TCGA-06-0192-01B-01R-A96R-41",58,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,1185,1,1185,NA,NA,NA,NA
+"TCGA-06-0174-01A-01R-1849-01",54,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,98,1,98,NA,NA,NA,NA
+"TCGA-06-1801-01A-02R-A96S-41",56,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,360,1,360,NA,NA,NA,NA
+"TCGA-14-1037-01A-01R-A96T-41",66,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,587,1,587,NA,NA,NA,NA
+"TCGA-06-0649-01B-01R-A96R-41",73,"GBM","female","black or african american","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,64,1,64,NA,NA,NA,NA
+"TCGA-06-0195-01B-01R-A96R-41",63,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,225,1,225,NA,NA,NA,NA
+"TCGA-19-5958-01A-11R-A96U-41",56,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,428,1,428,NA,NA,NA,NA
+"TCGA-19-5956-01A-11R-A96U-41",53,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,684,1,684,NA,NA,NA,NA
+"TCGA-06-2564-01A-01R-A96S-41",50,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,181,0,181,NA,NA,NA,NA
+"TCGA-12-0829-01A-01R-A96T-41",75,"GBM","male","black or african american","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,626,1,626,NA,NA,NA,NA
+"TCGA-06-1806-01A-02R-A96S-41",47,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,466,1,466,NA,NA,NA,NA
+"TCGA-12-0657-01A-01R-A96S-41",69,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,3,1,3,NA,NA,NA,NA
+"TCGA-02-0016-01A-01R-A96R-41",50,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,2648,1,2648,NA,NA,NA,NA
+"TCGA-06-1800-01A-01R-A96S-41",61,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,815,1,815,NA,NA,NA,NA
+"TCGA-06-6697-01A-11R-A96S-41",65,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,391,0,391,NA,NA,NA,NA
+"TCGA-28-5216-01A-01R-1850-01",52,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,415,0,415,NA,NA,NA,NA
+"TCGA-06-2570-01A-01R-A96S-41",21,"GBM","female","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,958,0,958,NA,NA,NA,NA
+"TCGA-06-0876-01A-01R-A96S-41",72,"GBM","female","black or african american","Unknown","Unknown","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,1405,0,1405,NA,NA,NA,NA
+"TCGA-32-1982-01A-01R-1850-01",76,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,142,1,142,NA,NA,NA,NA
+"TCGA-02-2466-01A-01R-A96R-41",61,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,511,1,511,NA,NA,NA,NA
+"TCGA-06-2565-01A-01R-1849-01",59,"GBM","male","asian","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,506,1,506,NA,NA,NA,NA
+"TCGA-06-0686-01A-01R-1849-01",53,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,432,1,432,NA,NA,NA,NA
+"TCGA-12-5295-01A-01R-A96T-41",60,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,454,1,454,NA,NA,NA,NA
+"TCGA-06-0939-01A-01R-A96S-41",79,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,814,1,814,NA,NA,NA,NA
+"TCGA-28-5215-01A-01R-1850-01",62,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,335,1,335,NA,NA,NA,NA
+"TCGA-06-6693-01A-11R-A96S-41",64,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,3667,1,3667,NA,NA,NA,NA
+"TCGA-06-2561-01A-02R-1849-01",53,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,537,1,537,NA,NA,NA,NA
+"TCGA-12-0778-01A-01R-A96S-41",53,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,454,1,454,NA,NA,NA,NA
+"TCGA-26-5139-01A-01R-1850-01",65,"GBM","female","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,48,0,48,NA,NA,NA,NA
+"TCGA-19-A60I-01A-12R-A96U-41",39,"GBM","male","black or african american","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,541,0,541,NA,NA,NA,NA
+"TCGA-06-6389-01A-11R-A96S-41",49,"GBM","female","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,237,0,237,NA,NA,NA,NA
+"TCGA-02-0003-01A-01R-A96R-41",50,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,144,1,144,NA,NA,NA,NA
+"TCGA-06-5412-01A-01R-A96S-41",78,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,138,1,138,NA,NA,NA,NA
+"TCGA-32-5222-01A-01R-1850-01",66,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,585,1,585,NA,NA,NA,NA
+"TCGA-12-0821-01A-01R-A96T-41",62,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,323,1,323,NA,NA,NA,NA
+"TCGA-06-A6S1-01A-11R-A96S-41",53,"GBM","female","black or african american","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,78,1,78,NA,NA,NA,NA
+"TCGA-06-0157-01A-01R-1849-01",63,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,97,1,97,NA,NA,NA,NA
+"TCGA-12-0616-01A-01R-1849-01",36,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,448,1,448,NA,NA,NA,NA
+"TCGA-12-1089-01A-01R-A96T-41",64,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,177,1,177,NA,NA,NA,NA
+"TCGA-06-5418-01A-01R-A96S-41",75,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,83,1,83,NA,NA,NA,NA
+"TCGA-14-1821-01A-01R-A96U-41",31,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,541,1,541,NA,NA,NA,NA
+"TCGA-02-2485-01A-01R-A96R-41",53,"GBM","male","black or african american","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,470,0,470,NA,NA,NA,NA
+"TCGA-14-0867-01A-01R-A96T-41",67,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,62,1,62,NA,NA,NA,NA
+"TCGA-14-1401-01A-01R-A96T-41",54,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,114,1,114,NA,NA,NA,NA
+"TCGA-19-1791-01A-01R-A96U-41",82,"GBM","female","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,4,0,4,NA,NA,NA,NA
+"TCGA-06-6699-01A-11R-A96S-41",58,"GBM","female","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,47,0,47,NA,NA,NA,NA
+"TCGA-14-2554-01A-01R-1850-01",52,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,532,1,532,NA,NA,NA,NA
+"TCGA-41-5651-01A-01R-1850-01",59,"GBM","female","black or african american","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,460,1,460,NA,NA,NA,NA
+"TCGA-14-0866-01B-01R-A96T-41",55,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,801,1,801,NA,NA,NA,NA
+"TCGA-12-0820-01A-01R-A96T-41",40,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,562,1,562,NA,NA,NA,NA
+"TCGA-06-2559-01A-01R-A96S-41",83,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,150,1,150,NA,NA,NA,NA
+"TCGA-06-2558-01A-01R-A96S-41",75,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,380,1,380,NA,NA,NA,NA
+"TCGA-28-5207-01A-01R-1850-01",71,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,343,1,343,NA,NA,NA,NA
+"TCGA-28-5218-01A-01R-1850-01",63,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,157,1,157,NA,NA,NA,NA
+"TCGA-27-1832-01A-01R-1850-01",59,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,300,1,300,NA,NA,NA,NA
+"TCGA-06-0162-01A-01R-A96R-41",47,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,104,1,104,NA,NA,NA,NA
+"TCGA-12-0828-01A-01R-A96T-41",57,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,272,1,272,NA,NA,NA,NA
+"TCGA-06-0743-01A-01R-A96S-41",69,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,803,1,803,NA,NA,NA,NA
+"TCGA-14-1825-01A-01R-A96U-41",70,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,232,1,232,NA,NA,NA,NA
+"TCGA-06-0749-01A-01R-A96S-41",50,"GBM","male","black or african american","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,82,1,82,NA,NA,NA,NA
+"TCGA-14-0812-01B-01R-A96T-41",65,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,99,1,99,NA,NA,NA,NA
+"TCGA-27-1831-01A-01R-1850-01",66,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,505,1,505,NA,NA,NA,NA
+"TCGA-27-2528-01A-01R-1850-01",62,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,480,1,480,NA,NA,NA,NA
+"TCGA-28-1753-01A-01R-1850-01",53,"GBM","male","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,37,0,37,NA,NA,NA,NA
+"TCGA-19-2625-01A-01R-1850-01",76,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,124,1,124,NA,NA,NA,NA
+"TCGA-06-5408-01A-01R-1849-01",54,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,357,1,357,NA,NA,NA,NA
+"TCGA-32-1980-01A-01R-1850-01",72,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,36,1,36,NA,NA,NA,NA
+"TCGA-19-2629-01A-01R-1850-01",60,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,737,1,737,NA,NA,NA,NA
+"TCGA-06-2562-01A-01R-1849-01",81,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,382,1,382,NA,NA,NA,NA
+"TCGA-12-3646-01A-01R-A96T-41",59,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,1339,1,1339,NA,NA,NA,NA
+"TCGA-02-0039-01A-01R-A96R-41",54,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,320,1,320,NA,NA,NA,NA
+"TCGA-14-0813-01A-01R-A96T-41",78,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,41,1,41,NA,NA,NA,NA
+"TCGA-06-5858-01A-01R-1849-01",45,"GBM","female","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,187,0,187,NA,NA,NA,NA
+"TCGA-76-4932-01A-01R-1850-01",50,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,1458,1,1458,NA,NA,NA,NA
+"TCGA-06-2566-01A-01R-A96S-41",23,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,182,1,182,NA,NA,NA,NA
+"TCGA-12-3651-01A-01R-A96T-41",77,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,386,1,386,NA,NA,NA,NA
+"TCGA-12-0773-01A-01R-A96S-41",24,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,1315,1,1315,NA,NA,NA,NA
+"TCGA-76-4928-01B-01R-1850-01",85,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,94,1,94,NA,NA,NA,NA
+"TCGA-19-5952-01A-11R-A96U-41",62,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,575,1,575,NA,NA,NA,NA
+"TCGA-19-4068-01A-01R-A96U-41",68,"GBM","female","white","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,137,0,137,NA,NA,NA,NA
+"TCGA-06-0648-01A-01R-A96R-41",77,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,298,1,298,NA,NA,NA,NA
+"TCGA-19-0955-01A-02R-A96U-41",71,"GBM","male","asian","Unknown","Glioblastoma","Unknown","Complete Remission/Response","Unknown","Primary Tumor","GBM",0,358,0,358,NA,NA,NA,NA
+"TCGA-06-5856-01A-01R-1849-01",58,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,114,1,114,NA,NA,NA,NA
+"TCGA-02-0033-01A-01R-A96R-41",54,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,86,1,86,NA,NA,NA,NA
+"TCGA-12-0826-01A-01R-A96T-41",38,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,845,1,845,NA,NA,NA,NA
+"TCGA-06-0158-01A-01R-A96R-41",73,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,329,1,329,NA,NA,NA,NA
+"TCGA-27-1837-01A-01R-1850-01",36,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,427,1,427,NA,NA,NA,NA
+"TCGA-12-3644-01A-01R-A96T-41",47,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,1818,1,1818,NA,NA,NA,NA
+"TCGA-76-4929-01A-01R-1850-01",76,"GBM","female","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,111,1,111,NA,NA,NA,NA
+"TCGA-06-0879-01A-01R-A96S-41",52,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,1229,1,1229,NA,NA,NA,NA
+"TCGA-06-0155-01B-01R-A96R-41",61,"GBM","male","white","Unknown","Glioblastoma","Unknown","Progressive Disease","Unknown","Primary Tumor","GBM",1,318,1,318,NA,NA,NA,NA
